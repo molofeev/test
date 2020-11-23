@@ -22,6 +22,7 @@
     "asar": true
   },
   "dependencies": {
+    "node-linux": "^0.1.12",
     "node-mac": "^1.0.1",
     "sudo-prompt": "^9.2.1",
     "ws": "^7.4.0"

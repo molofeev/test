@@ -1,4 +1,9 @@
-var Service = require('node-mac').Service;
+if (process.platform === 'linux') {
+    var Service = require('node-linux').Service;
+} else if (process.platform === 'darwin') {
+    var Service = require('node-mac').Service;
+}
+
 const { join } = require('path');
 
 function isRunningFromAsar() {
@@ -18,6 +23,10 @@ var svc = new Service({
     grow: .5,
     daemonEnvs: {
         ELECTRON_RUN_AS_NODE: '1'
+    },
+    env: {
+        name: 'ELECTRON_RUN_AS_NODE',
+        value: 1 
     }
 });
 

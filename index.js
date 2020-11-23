@@ -33,8 +33,9 @@ const options = {
 
 app.whenReady().then(() => {
     try{
-        console.log('DEAMON STATUS====',svc.exists)
-        if (!svc.exists) {
+      const daemonStatus = process.platform === 'linux' ? svc.exists() : svc.exists;
+        console.log('DEAMON STATUS====',daemonStatus)
+        if (!daemonStatus) {
           const cmd = `ELECTRON_RUN_AS_NODE=1 ${process.execPath} ${scriptPath}`;
           console.log(`launch command======${cmd}`)
           sudo.exec(cmd, options,
