@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+<body>
+    <script type="text/javascript">
+        function test() {
+            let socket = new WebSocket('ws://localhost:8086');
+
+            socket.onopen = function(e) {
+                console.log("[open] Connection established");
+                console.log("Sending to server");
+                socket.send(JSON.stringify({hello: 'world'}));
+            };
+
+            socket.onmessage = function(event) {
+                console.log(`[message] Data received from server: ${event.data}`);
+            };
+
+            socket.onclose = function(event) {
+                if (event.wasClean) {
+                    console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+                } else {
+                    // e.g. server process killed or network down
+                    // event.code is usually 1006 in this case
+                    console.log('[close] Connection died');
+                }
+            };
+
+            socket.onerror = function(error) {
+                console.log(`[error] ${error.message}`);
+            };
+        }    
+    </script>
+    <h1>Hello World!</h1>
+    <button onclick="test()">TEST</button>
+</body>
+</html>

@@ -1,0 +1,32 @@
+diff --git a/node_modules/node-mac/lib/daemon.js b/node_modules/node-mac/lib/daemon.js
+index d7eab89..ac93ad6 100644
+--- a/node_modules/node-mac/lib/daemon.js
++++ b/node_modules/node-mac/lib/daemon.js
+@@ -165,6 +165,17 @@ var daemon = function(config) {
+ 	  	value: config.env || []
+ 	  },
+ 
++		/**
++		* @cfg {Object} [daemonEnvs={}]
++		* env variables for native process
++	   	*/
++	  daemonEnvs: {
++		enumerable: false,
++		get: function(){
++			return config.daemonEnvs || {};
++		}
++	  },
++
+     EnvironmentVariables: {
+     	enumerable: false,
+     	get: function(){
+@@ -340,7 +351,8 @@ var daemon = function(config) {
+ 						}
+ 
+ 						var tpl = {
+-              Title: me.label,
++			   				Title: me.label,
++				  			EnvironmentVariables: me.daemonEnvs,
+ 							Label: me.label,
+ 							ProgramArguments: args,
+ 							RunAtLoad: true,

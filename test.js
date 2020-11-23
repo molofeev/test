@@ -1,0 +1,1 @@
+console.log('this is test', process.argv, process.env)
